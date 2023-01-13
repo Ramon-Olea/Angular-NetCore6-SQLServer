@@ -15,9 +15,16 @@ export class TarjetaService {
     return this.http.get(this.myAppUrl + this.myApiUrl);
 
   }
-  deletearjeta(id: number): Observable<any>{
+  deleteTarjeta(id: number): Observable<any>{
     return this.http.delete(this.myAppUrl + this.myApiUrl + id);
 
   }
+  saveTarjeta(tarjeta: any): Observable<any>{
+    return this.http.post(this.myAppUrl + this.myApiUrl , tarjeta);
 
+  }
+  updateTarjeta(id: number,tarjeta: any): Observable<any>{
+    return this.http.put(this.myAppUrl + this.myApiUrl + id,tarjeta);
+
+  }
 }
