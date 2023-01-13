@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { TarjetaService } from '../../services/tarjeta.service';
 @Component({
   selector: 'app-tarjeta-credito',
   templateUrl: './tarjeta-credito.component.html',
@@ -8,16 +9,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TarjetaCreditoComponent {
 listTarjeta: any[] = [
-  { titulo: 'asas',numeroTarjeta: '3243434324',fechaExpiracion: '11/28', cvv:'233'},
-  { titulo: 'assdsdas',numeroTarjeta: '2132323323',fechaExpiracion: '09/28', cvv:'554'},
-  { titulo: 'sadasd',numeroTarjeta: '43543545435',fechaExpiracion: '07/28', cvv:'432'},
-
 
 ];
 
 form: FormGroup;
 
-constructor(private fb: FormBuilder,private toastr: ToastrService) {
+constructor(private fb: FormBuilder,private toastr: ToastrService,
+  private _tarjetaService: TarjetaService
+  ) {
   this.form = this.fb.group({
     titulo: ['',Validators.required],
     numeroTarjeta: ['',[Validators.required, Validators.maxLength(16),Validators.minLength(16)]],
@@ -29,6 +28,20 @@ constructor(private fb: FormBuilder,private toastr: ToastrService) {
 
 
 }
+ngOnInit(): void {
+this.obtenerTarjetas();
+}
+
+obtenerTarjetas(){
+
+  this._tarjetaService.getListTarjetas().subscribe(data => {
+    this.listTarjeta = data ;
+  },error => {
+    console.log(error);
+
+  })
+}
+
 
 agregarTarjeta(){
   const tarjeta: any ={
@@ -44,9 +57,13 @@ agregarTarjeta(){
 
 }
 
-eliminarTarjeta(index: number){
-  this.listTarjeta.splice(index, 1);
-  this.toastr.error('Tarjeta Eliminada con exito', 'Tarjeta Eliminada');
+eliminarTarjeta(id: number){
+  this._tarjetaService.deletearjeta(id).subscribe(data =>{
+    this.toastr.error('Tarjeta Eliminada con exito', 'Tarjeta Eliminada');
+    this.obtenerTarjetas();
+  },error => {
+    console.log(error);
+  })
 
 }
 
