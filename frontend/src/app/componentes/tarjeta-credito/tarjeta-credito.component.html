@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+          <div class="card">
+            <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
+            <div class="card-body">
+              <h5 class="card-title">TARJETA DE CREDITO</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="mt-4">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <H4> AGREGAR TARJETA </H4>
+              <form [formGroup]="form" (ngSubmit)="agregarTarjeta()">
+                <div class="input-group mb-3">
+                  <label class="sr-only" for="inlineFormInputGroup"
+                    >Nombre</label
+                  >
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa-solid fa-user" [class.green-icon]="this.form.get('titulo')?.valid"
+                        [class.red-icon]="this.form.get('titulo')?.invalid && this.form.get('titulo')?.touched"
+                        ></i></div>
+                    </div>
+                    <input
+                    formControlName="titulo"
+                      type="text"
+                      class="form-control"
+                      id="inlineFormInputGroup"
+                      placeholder="Nombre"
+                    />
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <label class="sr-only" for="inlineFormInputGroup"
+                    >NUMERO DE TARJETA</label
+                  >
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa-regular fa-credit-card"
+                        [class.green-icon]="this.form.get('numeroTarjeta')?.valid"
+                        [class.red-icon]="this.form.get('numeroTarjeta')?.invalid && this.form.get('numeroTarjeta')?.touched"
+                        ></i></div>
+                    </div>
+                    <input
+                    formControlName="numeroTarjeta"
+                      type="text"
+                      class="form-control"
+                      id="inlineFormInputGroup"
+                      placeholder="NUMERO DE TARJETA"
+                      maxlength="16"
+
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-7">
+                    <div class="input-group mb-3">
+                      <label class="sr-only" for="inlineFormInputGroup"
+                        >FECHA DE EXPITRACION</label
+                      >
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa-solid fa-calendar-days"
+                            [class.green-icon]="this.form.get('fechaExpiracion')?.valid"
+                            [class.red-icon]="this.form.get('fechaExpiracion')?.invalid && this.form.get('fechaExpiracion')?.touched"
+                            ></i></div>
+                        </div>
+                        <input
+                        formControlName="fechaExpiracion"
+                          type="text"
+                          class="form-control"
+                          id="inlineFormInputGroup"
+                          placeholder="MM/YY"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                      <label class="sr-only" for="inlineFormInputGroup"
+                        >CVV</label
+                      >
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa-solid fa-key"
+                            [class.green-icon]="this.form.get('cvv')?.valid"
+                            [class.red-icon]="this.form.get('cvv')?.invalid && this.form.get('cvv')?.touched"
+                            ></i></div>
+                        </div>
+                        <input
+                        formControlName="cvv"
+                          type="password"
+                          class="form-control"
+                          id="inlineFormInputGroup"
+                          placeholder="CVV"
+                          maxlength="3"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="d-grid gap-2">
+                    <button [disabled]="this.form.invalid" type="submit" class="btn btn-success btn-lg btn-block">Agregar</button>
+
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <H4> LISTADO DE TARJETAS </H4>
+
+              <table class="table table-light">
+                <tbody>
+                  <tr *ngFor="let tarjeta of listTarjeta; let i = index">
+                    <td>{{ tarjeta.titulo }}</td>
+                    <td>{{ tarjeta.numeroTarjeta }}</td>
+                    <td>{{ tarjeta.fechaExpiracion }}</td>
+                    <td>{{ tarjeta.cvv }}</td>
+
+                    <td><i    class="fa-solid fa-pen-to-square"></i></td>
+                    <td><i  (click)="eliminarTarjeta(i)" class="fa-solid fa-trash"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
